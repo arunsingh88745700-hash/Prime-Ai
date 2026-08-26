@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#05060a">
+
+<title>Prime AI</title>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<style>
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box
+}
+
+html{
+ scroll-behavior:smooth
+}
+
+body{
+ font-family:Arial,Helvetica,sans-serif;
+ background:#05060a;
+ color:#fff;
+ overflow-x:hidden;
+ line-height:1.5
+}
+
+a{
+ text-decoration:none;
+ color:inherit
+}
+
+button{
+ font:inherit
+}
+
+.container{
+ width:min(1150px,90%);
+ margin:auto
+}
+
+/* NAV */
+
+.nav{
+ position:fixed;
+ top:0;
+ left:0;
+ width:100%;
+ height:68px;
+ z-index:100;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 5%;
+ background:#05060add;
+ backdrop-filter:blur(20px);
+ border-bottom:1px solid #ffffff0d
+}
+
+.brand{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ font-size:18px;
+ font-weight:800
+}
+
+.brand img{
+ width:35px;
+ height:35px;
+ border-radius:10px;
+ object-fit:cover;
+ background:#151722
+}
+
+.navlinks{
+ display:flex;
+ align-items:center;
+ gap:25px;
+ color:#999;
+ font-size:14px
+}
+
+.navlinks a:hover{
+ color:#fff
+}
+
+.navbtn{
+ padding:10px 16px;
+ border-radius:11px;
+ background:linear-gradient(135deg,#725cff,#378cff);
+ color:#fff!important
+}
+
+/* HERO */
+
+.hero{
+ min-height:100vh;
+ padding:130px 5% 80px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ position:relative;
+ overflow:hidden
+}
+
+.glow{
+ position:absolute;
+ width:500px;
+ height:500px;
+ border-radius:50%;
+ background:#5c4cff22;
+ filter:blur(100px);
+ top:10%;
+ left:50%;
+ transform:translateX(-50%);
+ pointer-events:none
+}
+
+.heroContent{
+ position:relative;
+ z-index:2;
+ max-width:850px
+}
+
+.status{
+ display:inline-flex;
+ align-items:center;
+ gap:7px;
+ padding:7px 14px;
+ border:1px solid #ffffff12;
+ background:#ffffff07;
+ border-radius:30px;
+ font-size:13px;
+ color:#bfc2ce
+}
+
+.dot{
+ width:7px;
+ height:7px;
+ border-radius:50%;
+ background:#5dff9a;
+ box-shadow:0 0 12px #5dff9a
+}
+
+.hero h1{
+ font-size:clamp(54px,10vw,105px);
+ line-height:.95;
+ letter-spacing:-5px;
+ margin:25px 0 22px
+}
+
+.gradient{
+ background:linear-gradient(
+  100deg,
+  #fff,
+  #aaa4ff,
+  #53b9ff
+ );
+ -webkit-background-clip:text;
+ background-clip:text;
+ color:transparent
+}
+
+.hero p{
+ max-width:650px;
+ margin:auto;
+ color:#9498a6;
+ font-size:17px
+}
+
+.buttons{
+ display:flex;
+ justify-content:center;
+ gap:10px;
+ flex-wrap:wrap;
+ margin-top:30px
+}
+
+.btn{
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ padding:14px 21px;
+ border-radius:13px;
+ border:1px solid transparent;
+ background:linear-gradient(135deg,#725cff,#378cff);
+ color:#fff;
+ font-weight:600;
+ transition:.2s
+}
+
+.btn:hover{
+ transform:translateY(-2px)
+}
+
+.btn.secondary{
+ background:#ffffff08;
+ border-color:#ffffff12
+}
+
+/* PHONE */
+
+.device{
+ width:270px;
+ height:500px;
+ margin:60px auto 0;
+ padding:8px;
+ border-radius:36px;
+ background:#171922;
+ border:1px solid #ffffff14;
+ box-shadow:0 30px 100px #000
+}
+
+.device img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ border-radius:29px;
+ background:#0d0e14
+}
+
+/* SECTIONS */
+
+section{
+ padding:100px 5%
+}
+
+.sectionTitle{
+ max-width:700px;
+ margin-bottom:40px
+}
+
+.eyebrow{
+ color:#7180ff;
+ font-size:11px;
+ letter-spacing:2px;
+ font-weight:bold
+}
+
+.sectionTitle h2{
+ font-size:clamp(35px,6vw,58px);
+ line-height:1.05;
+ margin:10px 0 14px
+}
+
+.sectionTitle p{
+ color:#9296a3;
+ font-size:15px
+}
+
+/* DOWNLOAD */
+
+.downloadBox{
+ max-width:1000px;
+ margin:auto;
+ padding:30px;
+ border:1px solid #ffffff0d;
+ background:#ffffff06;
+ border-radius:24px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:25px
+}
+
+.versionLabel{
+ font-size:11px;
+ color:#7482ff;
+ letter-spacing:1px
+}
+
+.downloadBox h3{
+ font-size:30px;
+ margin:5px 0 10px
+}
+
+.tags{
+ display:flex;
+ gap:7px;
+ flex-wrap:wrap
+}
+
+.tag{
+ font-size:11px;
+ padding:6px 9px;
+ border-radius:8px;
+ background:#ffffff08;
+ color:#a5a8b4
+}
+
+/* FEATURES */
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:15px
+}
+
+.feature{
+ padding:28px;
+ min-height:180px;
+ border:1px solid #ffffff0c;
+ background:#ffffff05;
+ border-radius:22px;
+ transition:.25s
+}
+
+.feature:hover{
+ transform:translateY(-5px);
+ background:#ffffff09
+}
+
+.icon{
+ font-size:28px
+}
+
+.feature h3{
+ margin:15px 0 7px;
+ font-size:19px
+}
+
+.feature p{
+ color:#9296a3;
+ font-size:14px
+}
+
+/* SYSTEM */
+
+.system{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ gap:10px;
+ flex-wrap:wrap
+}
+
+.step{
+ padding:20px 25px;
+ min-width:120px;
+ text-align:center;
+ border-radius:17px;
+ border:1px solid #ffffff0d;
+ background:#ffffff06
+}
+
+.step b{
+ display:block;
+ margin-top:5px
+}
+
+.arrow{
+ color:#6875ff;
+ font-size:20px
+}
+
+/* SCREENSHOTS */
+
+.screens{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:18px
+}
+
+.screen{
+ aspect-ratio:9/16;
+ overflow:hidden;
+ border-radius:24px;
+ border:1px solid #ffffff10;
+ background:#101119
+}
+
+.screen img{
+ width:100%;
+ height:100%;
+ object-fit:cover
+}
+
+/* MODEL */
+
+.modelBox{
+ max-width:900px;
+ margin:auto;
+ padding:35px;
+ border-radius:25px;
+ border:1px solid #ffffff10;
+ background:
+ radial-gradient(
+  circle at 100% 0,
+  #665cff18,
+  transparent 45%
+ ),
+ #ffffff05
+}
+
+.modelBox h3{
+ font-size:36px;
+ margin:8px 0
+}
+
+.modelBox p{
+ color:#9296a3
+}
+
+/* UPDATE */
+
+.updateBox{
+ max-width:900px;
+ margin:auto
+}
+
+.updateCard{
+ padding:30px;
+ border-radius:23px;
+ border:1px solid #ffffff0e;
+ background:#ffffff06
+}
+
+.coming{
+ font-size:11px;
+ letter-spacing:2px;
+ color:#7180ff
+}
+
+.updateCard h3{
+ font-size:34px;
+ margin:8px 0
+}
+
+.updateCard p{
+ color:#969aa7
+}
+
+.updateCard ul{
+ margin:18px 0 0;
+ padding-left:20px;
+ color:#aaa
+}
+
+/* CHANGELOG */
+
+.changelog{
+ max-width:900px;
+ margin:auto;
+ display:grid;
+ gap:12px
+}
+
+.change{
+ padding:22px;
+ border:1px solid #ffffff0d;
+ background:#ffffff05;
+ border-radius:18px
+}
+
+.changeHead{
+ display:flex;
+ justify-content:space-between;
+ gap:15px
+}
+
+.changeHead small{
+ color:#777
+}
+
+.change ul{
+ padding-left:20px;
+ margin-top:10px;
+ color:#999;
+ font-size:14px
+}
+
+/* FAQ */
+
+.faq{
+ max-width:900px;
+ margin:auto;
+ display:grid;
+ gap:10px
+}
+
+.question{
+ padding:19px 21px;
+ border-radius:16px;
+ border:1px solid #ffffff0d;
+ background:#ffffff05
+}
+
+.question strong{
+ display:flex;
+ justify-content:space-between;
+ cursor:pointer
+}
+
+.answer{
+ display:none;
+ color:#9498a4;
+ font-size:14px;
+ padding-top:12px
+}
+
+.question.open .answer{
+ display:block
+}
+
+/* FINAL */
+
+.final{
+ text-align:center;
+ padding:120px 5%
+}
+
+.final h2{
+ font-size:clamp(40px,7vw,75px);
+ line-height:1
+}
+
+.final p{
+ color:#9296a3;
+ margin:15px 0 27px
+}
+
+/* FOOTER */
+
+footer{
+ padding:30px 5%;
+ border-top:1px solid #ffffff0c;
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ color:#666;
+ font-size:12px
+}
+
+/* LOADER */
+
+.loader{
+ position:fixed;
+ inset:0;
+ z-index:999;
+ background:#05060a;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ transition:.4s
+}
+
+.loader.hide{
+ opacity:0;
+ pointer-events:none
+}
+
+.loaderLogo{
+ font-size:25px;
+ font-weight:bold;
+ animation:pulse 1.2s infinite
+}
+
+@keyframes pulse{
+ 50%{
+  opacity:.45;
+  transform:scale(.96)
+ }
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+ .navlinks a:not(.navbtn){
+  display:none
+ }
+
+ .grid{
+  grid-template-columns:1fr
+ }
+
+ .screens{
+  grid-template-columns:repeat(2,1fr)
+ }
+
+ .downloadBox{
+  flex-direction:column;
+  align-items:flex-start
+ }
+
+}
+
+@media(max-width:500px){
+
+ section{
+  padding:75px 5%
+ }
+
+ .hero{
+  padding-top:110px
+ }
+
+ .hero h1{
+  letter-spacing:-3px
+ }
+
+ .device{
+  width:235px;
+  height:430px
+ }
+
+ .screens{
+  gap:8px
+ }
+
+ .downloadBox{
+  padding:23px
+ }
+
+ .step{
+  min-width:105px;
+  padding:16px 12px
+ }
+
+ footer{
+  flex-direction:column
+ }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="loader" id="loader">
+ <div class="loaderLogo">PRIME AI</div>
+</div>
+
+<header class="nav">
+
+<a href="#home" class="brand">
+
+<img id="logo" src="" alt="Prime AI">
+
+<span>PRIME AI</span>
+
+</a>
+
+<nav class="navlinks">
+
+<a href="#features">Features</a>
+
+<a href="#preview">Preview</a>
+
+<a href="#model">Model</a>
+
+<a href="#updates">Updates</a>
+
+<a href="#download" class="navbtn">
+Download
+</a>
+
+</nav>
+
+</header>
+
+
+<main>
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+<div class="glow"></div>
+
+<div class="heroContent">
+
+<div class="status">
+
+<span class="dot"></span>
+
+<span id="statusText">
+Prime AI is available
+</span>
+
+</div>
+
+
+<h1>
+
+Meet
+
+<span class="gradient">
+Prime AI
+</span>
+
+</h1>
+
+
+<p id="heroText">
+
+Your intelligent AI assistant for conversations,
+knowledge, learning and everyday questions.
+
+</p>
+
+
+<div class="buttons">
+
+<a href="#download" class="btn">
+Download Prime AI
+</a>
+
+<a href="#features" class="btn secondary">
+Explore Prime AI
+</a>
+
+</div>
+
+
+<div class="device">
+
+<img id="heroImage"
+src=""
+alt="Prime AI Preview">
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- DOWNLOAD -->
+
+<section id="download">
+
+<div class="container">
+
+<div class="sectionTitle">
+
+<div class="eyebrow">
+GET THE APP
+</div>
+
+<h2>
+Download Prime AI
+</h2>
+
+<p>
+Get the latest version of Prime AI for Android.
+</p>
+
+</div>
+
+
+<div class="downloadBox">
+
+<div>
+
+<div class="versionLabel">
+LATEST VERSION
+</div>
+
+<h3 id="version">
+V3.2.2
+</h3>
+
+<div class="tags">
+
+<span class="tag">
+Android
+</span>
+
+<span class="tag">
+APK
+</span>
+
+<span class="tag">
+Available
+</span>
+
+</div>
+
+</div>
+
+
+<!-- DIRECT APK LINK -->
+
+<a
+id="downloadBtn"
+class="btn"
+href="https://github.com/arunsingh88745700-hash/Prime-/releases/download/V3.2.2/Ai.apk">
+
+⬇ Download APK
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section id="features">
+
+<div class="container">
+
+<div class="sectionTitle">
+
+<div class="eyebrow">
+CAPABILITIES
+</div>
+
+<h2>
+Built to be useful.
+</h2>
+
+<p>
+Prime AI combines conversation,
+knowledge and intelligent processing
+in one assistant.
+</p>
+
+</div>
+
+
+<div class="grid">
+
+
+<div class="feature">
+
+<div class="icon">💬</div>
+
+<h3>
+Smart Chat
+</h3>
+
+<p>
+Natural conversations with clear
+and useful answers.
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="icon">🧠</div>
+
+<h3>
+Knowledge
+</h3>
+
+<p>
+Structured knowledge for
+everyday questions.
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="icon">📚</div>
+
+<h3>
+Learning
+</h3>
+
+<p>
+Helpful information for
+learning and study.
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="icon">🧮</div>
+
+<h3>
+Mathematics
+</h3>
+
+<p>
+Help with calculations,
+formulas and problems.
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="icon">💪</div>
+
+<h3>
+Fitness
+</h3>
+
+<p>
+Useful fitness and exercise
+information.
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="icon">🌐</div>
+
+<h3>
+Languages
+</h3>
+
+<p>
+Designed to understand English,
+Hindi and Hinglish.
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="icon">⚡</div>
+
+<h3>
+Fast
+</h3>
+
+<p>
+Designed for quick interaction
+and smooth responses.
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="icon">🧩</div>
+
+<h3>
+Smart Processing
+</h3>
+
+<p>
+Understands the user's question
+before responding.
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="icon">🔄</div>
+
+<h3>
+Continuous Updates
+</h3>
+
+<p>
+New knowledge, improvements
+and features can be added.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- SYSTEM -->
+
+<section>
+
+<div class="container">
+
+<div class="sectionTitle">
+
+<div class="eyebrow">
+SYSTEM
+</div>
+
+<h2>
+How Prime AI works.
+</h2>
+
+<p>
+A simple pipeline turns your
+question into an answer.
+</p>
+
+</div>
+
+
+<div class="system">
+
+<div class="step">
+👤
+<b>User</b>
+</div>
+
+<div class="arrow">→</div>
+
+<div class="step">
+🧠
+<b>Understand</b>
+</div>
+
+<div class="arrow">→</div>
+
+<div class="step">
+🔎
+<b>Knowledge</b>
+</div>
+
+<div class="arrow">→</div>
+
+<div class="step">
+⚡
+<b>Process</b>
+</div>
+
+<div class="arrow">→</div>
+
+<div class="step">
+🤖
+<b>Answer</b>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- PREVIEW -->
+
+<section id="preview">
+
+<div class="container">
+
+<div class="sectionTitle">
+
+<div class="eyebrow">
+APP PREVIEW
+</div>
+
+<h2>
+Inside Prime AI.
+</h2>
+
+<p>
+See the Prime AI experience.
+</p>
+
+</div>
+
+
+<div class="screens">
+
+<div class="screen">
+<img id="screen1"
+src=""
+alt="Prime AI Screenshot 1">
+</div>
+
+<div class="screen">
+<img id="screen2"
+src=""
+alt="Prime AI Screenshot 2">
+</div>
+
+<div class="screen">
+<img id="screen3"
+src=""
+alt="Prime AI Screenshot 3">
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- MODEL -->
+
+<section id="model">
+
+<div class="container">
+
+<div class="sectionTitle">
+
+<div class="eyebrow">
+AI MODEL
+</div>
+
+<h2>
+The intelligence behind Prime AI.
+</h2>
+
+</div>
+
+
+<div class="modelBox">
+
+<div class="versionLabel">
+CURRENT MODEL
+</div>
+
+<h3 id="modelName">
+Prime AI V3
+</h3>
+
+<p id="modelDescription">
+Our current Prime AI model is designed
+to provide useful, fast and natural responses.
+</p>
+
+</div>
+
+</div>
+
+</section>
+<!-- UPDATE -->
+
+<section id="updates">
+
+<div class="container updateBox">
+
+<div class="sectionTitle">
+
+<div class="eyebrow">
+WHAT'S NEXT
+</div>
+
+<h2>
+Upcoming Update.
+</h2>
+
+</div>
+
+
+<div class="updateCard">
+
+<div class="coming" id="updateStatus">
+COMING SOON
+</div>
+
+<h3 id="updateVersion">
+Prime AI V3.3.0
+</h3>
+
+<p id="updateDescription">
+A new Prime AI update is coming soon.
+</p>
+
+<ul id="updateList"></ul>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CHANGELOG -->
+
+<section id="changelog">
+
+<div class="container">
+
+<div class="sectionTitle">
+
+<div class="eyebrow">
+VERSION HISTORY
+</div>
+
+<h2>
+Changelog.
+</h2>
+
+<p>
+See what's changed across Prime AI versions.
+</p>
+
+</div>
+
+
+<div
+class="changelog"
+id="changeList">
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FAQ -->
+
+<section>
+
+<div class="container">
+
+<div class="sectionTitle">
+
+<div class="eyebrow">
+FAQ
+</div>
+
+<h2>
+Questions?
+</h2>
+
+</div>
+
+
+<div class="faq">
+
+
+<div class="question">
+
+<strong>
+What is Prime AI?
+<span>+</span>
+</strong>
+
+<div class="answer">
+Prime AI is an AI assistant designed
+for conversation, knowledge, learning
+and everyday tasks.
+</div>
+
+</div>
+
+
+<div class="question">
+
+<strong>
+Is Prime AI available for Android?
+<span>+</span>
+</strong>
+
+<div class="answer">
+Yes. The latest Android APK can be
+downloaded from the Download section.
+</div>
+
+</div>
+
+
+<div class="question">
+
+<strong>
+How can I download Prime AI?
+<span>+</span>
+</strong>
+
+<div class="answer">
+Press the Download APK button to
+download the current Android APK.
+</div>
+
+</div>
+
+
+<div class="question">
+
+<strong>
+What is the current Prime AI model?
+<span>+</span>
+</strong>
+
+<div class="answer">
+The current model is shown in the
+Prime AI Model section.
+</div>
+
+</div>
+
+
+<div class="question">
+
+<strong>
+When will the next update arrive?
+<span>+</span>
+</strong>
+
+<div class="answer">
+The latest planned update is shown
+in the Upcoming Update section.
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FINAL -->
+
+<section class="final">
+
+<h2>
+
+Ready for
+
+<span class="gradient">
+Prime AI?
+</span>
+
+</h2>
+
+<p>
+Download the latest version and
+experience Prime AI.
+</p>
+
+<a
+href="#download"
+class="btn">
+
+Download Prime AI
+
+</a>
+
+</section>
+
+
+</main>
+
+
+<footer>
+
+<span>
+© 2026 Prime AI
+</span>
+
+<span>
+Built for the future of AI
+</span>
+
+</footer>
+
+
+<script>
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+
+ apiKey:"YOUR_API_KEY",
+
+ authDomain:
+ "YOUR_PROJECT.firebaseapp.com",
+
+ databaseURL:
+ "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+
+ projectId:
+ "YOUR_PROJECT",
+
+ storageBucket:
+ "YOUR_PROJECT.appspot.com",
+
+ messagingSenderId:
+ "YOUR_SENDER_ID",
+
+ appId:
+ "YOUR_APP_ID"
+
+};
+
+
+firebase.initializeApp(firebaseConfig);
+
+const db =
+firebase.database();
+
+
+/* =========================
+   DEFAULT DATA
+========================= */
+
+const DEFAULT_DATA = {
+
+ website:{
+
+  status:
+  "Prime AI is available",
+
+  hero:
+  "Your intelligent AI assistant for conversations, knowledge, learning and everyday questions."
+
+ },
+
+ images:{
+
+  logo:"",
+
+  hero:"",
+
+  screenshot1:"",
+
+  screenshot2:"",
+
+  screenshot3:""
+
+ },
+
+ model:{
+
+  name:
+  "Prime AI V3",
+
+  description:
+  "Our current Prime AI model is designed to provide useful, fast and natural responses."
+
+ },
+
+ update:{
+
+  version:
+  "Prime AI V3.3.0",
+
+  status:
+  "COMING SOON",
+
+  description:
+  "A new Prime AI update is coming soon.",
+
+  features:[
+
+   "Better AI responses",
+
+   "Improved knowledge",
+
+   "Performance improvements"
+
+  ]
+
+ },
+
+ changelog:[
+
+  {
+
+   version:
+   "V3.2.2",
+
+   date:
+   "Latest",
+
+   changes:[
+
+    "Performance improvements",
+
+    "Bug fixes",
+
+    "UI improvements"
+
+   ]
+
+  }
+
+ ]
+
+};
+
+
+/* =========================
+   FIREBASE DATA
+========================= */
+
+db.ref("primeAIWebsite")
+.on("value",snapshot=>{
+
+ let data =
+ snapshot.val();
+
+ if(!data){
+
+  data =
+  DEFAULT_DATA;
+
+ }else{
+
+  data =
+  mergeData(
+   DEFAULT_DATA,
+   data
+  );
+
+ }
+
+ render(data);
+
+});
+
+
+/* =========================
+   MERGE
+========================= */
+
+function mergeData(base,data){
+
+ const result =
+ JSON.parse(
+  JSON.stringify(base)
+ );
+
+ Object.keys(data || {})
+ .forEach(key=>{
+
+  if(
+
+   data[key] &&
+
+   typeof data[key] ===
+   "object" &&
+
+   !Array.isArray(data[key])
+
+  ){
+
+   result[key]={
+
+    ...(result[key] || {}),
+
+    ...data[key]
+
+   };
+
+  }else{
+
+   result[key]=
+   data[key];
+
+  }
+
+ });
+
+ return result;
+
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function render(data){
+
+ /* WEBSITE */
+
+ document
+ .getElementById("statusText")
+ .textContent =
+ data.website?.status ||
+ DEFAULT_DATA.website.status;
+
+
+ document
+ .getElementById("heroText")
+ .textContent =
+ data.website?.hero ||
+ DEFAULT_DATA.website.hero;
+
+
+ /* APK VERSION */
+
+ document
+ .getElementById("version")
+ .textContent =
+ data.apk?.version ||
+ "V3.2.2";
+
+
+ /* IMAGES */
+
+ setImage(
+  "logo",
+  data.images?.logo
+ );
+
+
+ setImage(
+  "heroImage",
+  data.images?.hero
+ );
+
+
+ setImage(
+  "screen1",
+  data.images?.screenshot1
+ );
+
+
+ setImage(
+  "screen2",
+  data.images?.screenshot2
+ );
+
+
+ setImage(
+  "screen3",
+  data.images?.screenshot3
+ );
+
+
+ /* MODEL */
+
+ document
+ .getElementById("modelName")
+ .textContent =
+ data.model?.name ||
+ DEFAULT_DATA.model.name;
+
+
+ document
+ .getElementById("modelDescription")
+ .textContent =
+ data.model?.description ||
+ DEFAULT_DATA.model.description;
+
+
+ /* UPDATE */
+
+ document
+ .getElementById("updateStatus")
+ .textContent =
+ data.update?.status ||
+ DEFAULT_DATA.update.status;
+
+
+ document
+ .getElementById("updateVersion")
+ .textContent =
+ data.update?.version ||
+ DEFAULT_DATA.update.version;
+
+
+ document
+ .getElementById("updateDescription")
+ .textContent =
+ data.update?.description ||
+ DEFAULT_DATA.update.description;
+
+
+ const updateList =
+ document.getElementById(
+  "updateList"
+ );
+
+ updateList.innerHTML="";
+
+
+ (
+  data.update?.features ||
+  DEFAULT_DATA.update.features
+ )
+ .forEach(feature=>{
+
+  const li =
+  document.createElement("li");
+
+  li.textContent =
+  feature;
+
+  updateList.appendChild(li);
+
+ });
+
+
+ /* CHANGELOG */
+
+ const changeList =
+ document.getElementById(
+  "changeList"
+ );
+
+ changeList.innerHTML="";
+
+
+ (
+  data.changelog ||
+  DEFAULT_DATA.changelog
+ )
+ .forEach(item=>{
+
+  const box =
+  document.createElement("div");
+
+  box.className="change";
+
+
+  const head =
+  document.createElement("div");
+
+  head.className="changeHead";
+
+
+  const title =
+  document.createElement("strong");
+
+  title.textContent =
+  item.version;
+
+
+  const date =
+  document.createElement("small");
+
+  date.textContent =
+  item.date;
+
+
+  head.appendChild(title);
+
+  head.appendChild(date);
+
+  box.appendChild(head);
+
+
+  const ul =
+  document.createElement("ul");
+
+
+  (
+   item.changes || []
+  )
+  .forEach(change=>{
+
+   const li =
+   document.createElement("li");
+
+   li.textContent =
+   change;
+
+   ul.appendChild(li);
+
+  });
+
+
+  box.appendChild(ul);
+
+  changeList.appendChild(box);
+
+ });
+
+}
+
+
+/* =========================
+   IMAGE
+========================= */
+
+function setImage(id,url){
+
+ const img =
+ document.getElementById(id);
+
+ if(!img)
+ return;
+
+
+ if(
+  url &&
+  url.trim()
+ ){
+
+  img.src =
+  url;
+
+  img.style.display =
+  "block";
+
+ }else{
+
+  img.removeAttribute(
+   "src"
+  );
+
+  img.style.background =
+  "linear-gradient(135deg,#121522,#080910)";
+
+ }
+
+}
+
+
+/* =========================
+   FAQ
+========================= */
+
+document
+.querySelectorAll(".question")
+.forEach(question=>{
+
+ question.addEventListener(
+  "click",
+  ()=>{
+
+   question
+   .classList
+   .toggle("open");
+
+
+   const sign =
+   question
+   .querySelector(
+    "strong span"
+   );
+
+
+   sign.textContent =
+   question
+   .classList
+   .contains("open")
+   ? "−"
+   : "+";
+
+  }
+ );
+
+});
+
+
+/* =========================
+   LOADER
+========================= */
+
+window.addEventListener(
+ "load",
+ ()=>{
+
+  setTimeout(
+   ()=>{
+
+    document
+    .getElementById("loader")
+    .classList
+    .add("hide");
+
+   },
+   500
+  );
+
+ });
+
+</script>
+
+</body>
+</html>
