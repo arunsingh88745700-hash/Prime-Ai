@@ -1873,6 +1873,298 @@ window.addEventListener(
 
  });
 
+
+/* =====================================================
+   ⭐ PRIME AI — EASY SETTINGS
+   YAHAN SE WEBSITE KI IMPORTANT CHEEZEIN CHANGE KAREIN
+===================================================== */
+
+const SETTINGS = {
+
+  /* =========================
+     📱 APP DOWNLOAD
+  ========================= */
+
+  app: {
+
+    /* Current app version */
+    version: "V3.3.6",
+
+    /* Direct APK download URL */
+    downloadUrl:
+      "https://github.com/arunsingh88745700-hash/Prime-/releases/download/V3.3.6/Prime.ai.V3.3.6.apk",
+
+    /* Full changelog URL */
+    changelogUrl:
+      "https://github.com/arunsingh88745700-hash/Prime-/compare/V3.2.2...V3.3.6"
+
+  },
+
+
+  /* =========================
+     🚀 UPCOMING UPDATE
+  ========================= */
+
+  upcoming: {
+
+    /* Next version */
+    version: "V3.4.2",
+
+    /* Status */
+    status: "COMING SOON",
+
+    /* Description */
+    description:
+      "A new Prime AI update is coming soon.",
+
+    /* Upcoming features */
+    features: [
+      "Better AI responses",
+      "Improved knowledge",
+      "Performance improvements"
+    ]
+
+  },
+
+
+  /* =========================
+     🧠 AI MODEL
+  ========================= */
+
+  model: {
+
+    /* Current model name */
+    name: "Prime AI",
+
+    /* Current available modes */
+    modes: [
+      "Fast",
+      "Thinking",
+      "Agent",
+      "Flash"
+    ],
+
+    description:
+      "Prime AI supports Fast, Thinking, Agent and Flash modes."
+
+  },
+
+
+  /* =========================
+     🌐 WEBSITE
+  ========================= */
+
+  website: {
+
+    name: "PRIME AI",
+
+    status:
+      "Prime AI is available",
+
+    heroText:
+      "Your intelligent AI assistant for conversations, knowledge, learning and everyday questions."
+
+  },
+
+
+  /* =========================
+     🖼️ IMAGES
+     URL YAHAN PASTE KAREIN
+  ========================= */
+
+  images: {
+
+    logo:
+      "",
+
+    hero:
+      "",
+
+    screenshot1:
+      "",
+
+    screenshot2:
+      "",
+
+    screenshot3:
+      ""
+
+  }
+
+};
+
+
+/* =====================================================
+   ⚙️ WEBSITE CODE
+   ISKE NEECHE KA CODE normally CHANGE NAHI KARNA
+===================================================== */
+
+
+document.getElementById("statusText").textContent =
+  SETTINGS.website.status;
+
+
+document.getElementById("heroText").textContent =
+  SETTINGS.website.heroText;
+
+
+/* =========================
+   DOWNLOAD
+========================= */
+
+const versionElement =
+  document.getElementById("version");
+
+const downloadButton =
+  document.getElementById("downloadBtn");
+
+const changelogButton =
+  document.getElementById("changelogBtn");
+
+
+versionElement.textContent =
+  SETTINGS.app.version;
+
+
+downloadButton.href =
+  SETTINGS.app.downloadUrl;
+
+
+if (SETTINGS.app.downloadUrl.trim() === "") {
+
+  downloadButton.style.display = "none";
+
+} else {
+
+  downloadButton.style.display = "inline-flex";
+
+}
+
+
+/* =========================
+   CHANGELOG
+========================= */
+
+if (changelogButton) {
+
+  if (SETTINGS.app.changelogUrl.trim() === "") {
+
+    changelogButton.style.display = "none";
+
+  } else {
+
+    changelogButton.href =
+      SETTINGS.app.changelogUrl;
+
+    changelogButton.style.display =
+      "inline-block";
+
+  }
+
+}
+
+
+/* =========================
+   MODEL
+========================= */
+
+document.getElementById("modelName").textContent =
+  SETTINGS.model.name;
+
+
+document.getElementById("modelDescription").textContent =
+  SETTINGS.model.description;
+
+
+/* =========================
+   UPCOMING UPDATE
+========================= */
+
+document.getElementById("updateStatus").textContent =
+  SETTINGS.upcoming.status;
+
+
+document.getElementById("updateVersion").textContent =
+  SETTINGS.upcoming.version;
+
+
+document.getElementById("updateDescription").textContent =
+  SETTINGS.upcoming.description;
+
+
+const updateList =
+  document.getElementById("updateList");
+
+updateList.innerHTML = "";
+
+
+SETTINGS.upcoming.features.forEach(feature => {
+
+  const li =
+    document.createElement("li");
+
+  li.textContent =
+    feature;
+
+  updateList.appendChild(li);
+
+});
+
+
+/* =========================
+   IMAGES
+========================= */
+
+function setImage(id, url) {
+
+  const image =
+    document.getElementById(id);
+
+  if (!image) return;
+
+  if (url && url.trim() !== "") {
+
+    image.src = url;
+    image.style.display = "block";
+
+  } else {
+
+    image.removeAttribute("src");
+
+  }
+
+}
+
+
+setImage(
+  "logo",
+  SETTINGS.images.logo
+);
+
+
+setImage(
+  "heroImage",
+  SETTINGS.images.hero
+);
+
+
+setImage(
+  "screen1",
+  SETTINGS.images.screenshot1
+);
+
+
+setImage(
+  "screen2",
+  SETTINGS.images.screenshot2
+);
+
+
+setImage(
+  "screen3",
+  SETTINGS.images.screenshot3
+);
+
 </script>
 
 </body>
